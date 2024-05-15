@@ -8,6 +8,7 @@ class SplashScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(32, 33, 36, 1),
       body: Column(
         children: [
           const Spacer(),
@@ -26,6 +27,7 @@ class SplashScreen1 extends StatelessWidget {
                 "Unlock the potential of your Android device with",
                 textAlign: TextAlign.center,
                 style: TextStyle(
+                  color: Colors.white,
                   fontSize: 30,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Exo-Bold',
@@ -36,7 +38,7 @@ class SplashScreen1 extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 40,
-                  color: Color.fromRGBO(252, 123, 113, 1),
+                  color: Color.fromRGBO(158, 200, 185, 1),
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Exo-Bold',
                 ),

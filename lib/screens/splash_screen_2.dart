@@ -48,7 +48,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: const Color.fromRGBO(32, 33, 36, 1),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -66,9 +66,11 @@ class _SplashScreen2State extends State<SplashScreen2> {
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
-                    color: Color.fromRGBO(9, 38, 53, 1),
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(20))),
+                  color: Color.fromRGBO(48, 49, 52, 1),
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(50),
                   child: Column(

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "874858109247",
+    "firebase_url": "https://cust-rom-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "cust-rom",
+    "storage_bucket": "cust-rom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874858109247:android:45d7c98539b77c2261db8a",
+        "android_client_info": {
+          "package_name": "com.example.custrom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYCAoY99c8I5k1qxKJ62WRibEW8YcO044"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

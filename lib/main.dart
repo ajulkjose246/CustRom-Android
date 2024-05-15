@@ -1,8 +1,15 @@
+import 'package:custrom/firebase_options.dart';
+import 'package:custrom/screens/home_screen.dart';
 import 'package:custrom/screens/splash_screen_2.dart';
 import 'package:custrom/screens/splash_screen_1.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -17,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: ({
         "/splashScreen1": (context) => const SplashScreen1(),
         "/splashScreen2": (context) => const SplashScreen2(),
+        "/": (context) => const HomeScreen(),
       }),
       initialRoute: "/splashScreen1",
     );
