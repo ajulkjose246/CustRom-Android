@@ -1,5 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:custrom/components/shared_preferences.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dotlottie_loader/dotlottie_loader.dart';
 import 'package:flutter/material.dart';
@@ -203,6 +204,8 @@ class _SplashScreen2State extends State<SplashScreen2> {
                       const Spacer(),
                       GestureDetector(
                         onTap: () {
+                          SharedPreferencesService()
+                              .storeDeviceCode(deviceCodeName);
                           Navigator.pushNamedAndRemoveUntil(
                               context, '/', (route) => false);
                         },

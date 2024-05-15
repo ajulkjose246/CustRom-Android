@@ -1,8 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, avoid_print
-
-import 'dart:async';
-
-import 'package:device_info_plus/device_info_plus.dart';
+import 'package:custrom/components/shared_preferences.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -22,19 +19,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    getDeviceName();
-  }
-
-  Future<void> getDeviceName() async {
-    String Name = '';
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Theme.of(context).platform == TargetPlatform.android) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      Name = androidInfo.device;
+    try {
+      deviceCodeName = SharedPreferencesService().getDeviceCode();
+    } catch (e) {
+      print(e);
     }
-    setState(() {
-      deviceCodeName = Name;
-    });
   }
 
   @override
