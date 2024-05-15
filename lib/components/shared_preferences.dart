@@ -13,7 +13,39 @@ class SharedPreferencesService {
     prefs.setString("DeviceCode", deviceCode);
   }
 
+  storeDeviceName(String deviceName) {
+    prefs.setString("DeviceName", deviceName);
+  }
+
+  storeDeviceModelName(String deviceModelName) {
+    prefs.setString("DeviceModelName", deviceModelName);
+  }
+
+  storeDeviceBrandName(String deviceBrandName) {
+    prefs.setString("DeviceBrandName", deviceBrandName);
+  }
+
+  storeDeviceManufacturerName(String deviceManufacturerName) {
+    prefs.setString("DeviceManufacturerName", deviceManufacturerName);
+  }
+
   getDeviceCode() {
     return prefs.getString("DeviceCode");
+  }
+
+  getDeviceName() {
+    return prefs.getString("DeviceName");
+  }
+
+  getDeviceModelName() {
+    return prefs.getString("DeviceModelName");
+  }
+
+  getDeviceBrandName() {
+    return prefs.getString("DeviceBrandName");
+  }
+
+  getDeviceManufacturerName() {
+    return prefs.getString("DeviceManufacturerName");
   }
 }

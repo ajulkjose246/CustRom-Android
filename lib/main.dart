@@ -1,6 +1,6 @@
 import 'package:custrom/components/shared_preferences.dart';
 import 'package:custrom/firebase_options.dart';
-import 'package:custrom/screens/home_screen.dart';
+import 'package:custrom/screens/dash_screen.dart';
 import 'package:custrom/screens/splash_screen_2.dart';
 import 'package:custrom/screens/splash_screen_1.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -27,9 +27,9 @@ class MyApp extends StatelessWidget {
       routes: ({
         "/splashScreen1": (context) => const SplashScreen1(),
         "/splashScreen2": (context) => const SplashScreen2(),
-        "/": (context) => const HomeScreen(),
+        "/dash": (context) => DashScreen(),
       }),
-      initialRoute: deviceCodeName != null ? "/" : "/splashScreen1",
+      initialRoute: deviceCodeName != null ? "/dash" : "/splashScreen1",
     );
   }
 }

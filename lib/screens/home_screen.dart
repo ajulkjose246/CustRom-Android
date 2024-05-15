@@ -14,6 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _databaseReference = FirebaseDatabase.instance.ref("devices");
+
   var deviceCodeName = '';
 
   @override
@@ -28,62 +29,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(32, 33, 36, 1),
-      appBar: AppBar(
-        title: const Text(
-          "custRom",
-          style: TextStyle(
-            color: Colors.white,
-            fontFamily: 'Exo-Bold',
-          ),
-        ),
-        backgroundColor: const Color.fromRGBO(32, 33, 36, 1),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            buildFirebaseList(_databaseReference, deviceCodeName),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildFirebaseList(DatabaseReference reference, String deviceCodeName) {
-    return Expanded(
-      child: FutureBuilder(
-        future:
-            Future.delayed(const Duration(seconds: 1)), // Delay for 2 seconds
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-                child:
-                    CircularProgressIndicator()); // Show loading indicator during delay
-          } else {
-            return FirebaseAnimatedList(
-              query: reference.child("$deviceCodeName/roms"),
-              itemBuilder: (context, snapshot, animation, index) {
-                if (snapshot.value != null) {
-                  var romname = snapshot.key.toString();
-                  var romurl = snapshot.value.toString();
-                  return RomCard(
-                    romurl: romurl,
-                    romname: romname,
-                  );
-                } else {
-                  return const ListTile(
-                    title: Text(
-                      'No data available',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  );
-                }
-              },
-            );
-          }
-        },
-      ),
+    return FutureBuilder(
+      future: Future.delayed(const Duration(seconds: 1)), // Delay for 2 seconds
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+              child:
+                  CircularProgressIndicator()); // Show loading indicator during delay
+        } else {
+          return FirebaseAnimatedList(
+            query: _databaseReference.child("$deviceCodeName/roms"),
+            itemBuilder: (context, snapshot, animation, index) {
+              if (snapshot.value != null) {
+                var romname = snapshot.key.toString();
+                var romurl = snapshot.value.toString();
+                return RomCard(
+                  romurl: romurl,
+                  romname: romname,
+                );
+              } else {
+                return const ListTile(
+                  title: Text(
+                    'No data available',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
+              }
+            },
+          );
+        }
+      },
     );
   }
 }

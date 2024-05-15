@@ -206,14 +206,21 @@ class _SplashScreen2State extends State<SplashScreen2> {
                         onTap: () {
                           SharedPreferencesService()
                               .storeDeviceCode(deviceCodeName);
+                          SharedPreferencesService()
+                              .storeDeviceBrandName(deviceBrandName);
+                          SharedPreferencesService()
+                              .storeDeviceManufacturerName(
+                                  deviceManufacturerName);
+                          SharedPreferencesService()
+                              .storeDeviceModelName(deviceModelName);
                           Navigator.pushNamedAndRemoveUntil(
-                              context, '/', (route) => false);
+                              context, '/dash', (route) => false);
                         },
                         child: Container(
                           width: 150,
-                          height: 60,
+                          height: 50,
                           decoration: BoxDecoration(
-                            color: const Color.fromRGBO(158, 200, 185, 1),
+                            color: Colors.amber,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: const Row(
@@ -224,7 +231,7 @@ class _SplashScreen2State extends State<SplashScreen2> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 20,
+                                  fontSize: 15,
                                   fontFamily: 'Exo-Bold',
                                 ),
                               ),
