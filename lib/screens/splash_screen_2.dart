@@ -202,47 +202,86 @@ class _SplashScreen2State extends State<SplashScreen2> {
                         ),
                       ),
                       const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          SharedPreferencesService()
-                              .storeDeviceCode(deviceCodeName);
-                          SharedPreferencesService()
-                              .storeDeviceBrandName(deviceBrandName);
-                          SharedPreferencesService()
-                              .storeDeviceManufacturerName(
-                                  deviceManufacturerName);
-                          SharedPreferencesService()
-                              .storeDeviceModelName(deviceModelName);
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, '/dash', (route) => false);
-                        },
-                        child: Container(
-                          width: 150,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Confirm",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontFamily: 'Exo-Bold',
-                                ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/selectDevice');
+                            },
+                            child: Container(
+                              width: 150,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              Icon(
-                                Icons.arrow_right_alt_outlined,
-                                color: Colors.black,
-                              )
-                            ],
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "Edit",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontFamily: 'Exo-Bold',
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.edit_note,
+                                    color: Colors.black,
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              SharedPreferencesService()
+                                  .storeDeviceCode(deviceCodeName);
+                              SharedPreferencesService()
+                                  .storeDeviceBrandName(deviceBrandName);
+                              SharedPreferencesService()
+                                  .storeDeviceManufacturerName(
+                                      deviceManufacturerName);
+                              SharedPreferencesService()
+                                  .storeDeviceModelName(deviceModelName);
+                              Navigator.pushNamedAndRemoveUntil(
+                                  context, '/dash', (route) => false);
+                            },
+                            child: Container(
+                              width: 150,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Text(
+                                    "Confirm",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontFamily: 'Exo-Bold',
+                                    ),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_right_alt_outlined,
+                                    color: Colors.black,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

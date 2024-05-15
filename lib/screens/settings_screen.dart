@@ -38,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> fetchData() async {
     try {
-      final snapshot = await _databaseReference.child('redwood').get();
+      final snapshot = await _databaseReference.child(deviceCodeName).get();
       if (snapshot.exists) {
         final data = snapshot.value as Map<Object?, Object?>;
         data.forEach((key, value) {
@@ -110,7 +110,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         const BtnFW(
           label: 'Change Device',
-        )
+        ),
+        const BtnFW(
+          label: 'Request Device',
+        ),
       ],
     );
   }
