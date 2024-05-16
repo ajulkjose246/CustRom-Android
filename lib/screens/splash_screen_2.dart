@@ -108,12 +108,15 @@ Widget buildDeviceInfoRow(String label, String value) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 20.0,
-            color: Colors.white,
-            fontFamily: 'Exo-Bold',
+        Flexible(
+          fit: FlexFit.tight,
+          child: Text(
+            label,
+            style: const TextStyle(
+              fontSize: 15.0,
+              color: Colors.white,
+              fontFamily: 'Exo-Bold',
+            ),
           ),
         ),
         const SizedBox(width: 10),
@@ -123,7 +126,7 @@ Widget buildDeviceInfoRow(String label, String value) {
             value.isNotEmpty ? value : 'Loading...',
             textAlign: TextAlign.center,
             style: const TextStyle(
-              fontSize: 20.0,
+              fontSize: 15.0,
               color: Colors.white,
               fontWeight: FontWeight.w500,
               fontFamily: 'Exo-Bold',
@@ -149,11 +152,10 @@ Widget buildButtonRow(
           Navigator.pushNamed(context, '/selectDevice');
         },
         child: Container(
-          width: 150,
-          height: 50,
+          padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.amber,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -167,10 +169,6 @@ Widget buildButtonRow(
                   fontFamily: 'Exo-Bold',
                 ),
               ),
-              Icon(
-                Icons.edit_note,
-                color: Colors.black,
-              )
             ],
           ),
         ),
@@ -186,11 +184,10 @@ Widget buildButtonRow(
           Navigator.pushNamedAndRemoveUntil(context, '/dash', (route) => false);
         },
         child: Container(
-          width: 150,
-          height: 50,
+          padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.amber,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -204,10 +201,6 @@ Widget buildButtonRow(
                   fontFamily: 'Exo-Bold',
                 ),
               ),
-              Icon(
-                Icons.arrow_right_alt_outlined,
-                color: Colors.black,
-              )
             ],
           ),
         ),

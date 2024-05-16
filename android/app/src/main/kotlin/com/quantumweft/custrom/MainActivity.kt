@@ -1,4 +1,4 @@
-package com.example.custrom
+package com.quantumweft.custrom
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,9 +1,11 @@
-// ignore_for_file: non_constant_identifier_names, avoid_print
+// ignore_for_file: non_constant_identifier_names, avoid_print, use_build_context_synchronously
 
 import 'package:custrom/components/shared_preferences.dart';
 import 'package:dotlottie_loader/dotlottie_loader.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -15,6 +17,10 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final _databaseReference = FirebaseDatabase.instance.ref("devices");
+  final _databaseRequestReference = FirebaseDatabase.instance.ref("request");
+
+  final devicename_controller = TextEditingController();
+  final romname_controller = TextEditingController();
 
   String deviceCodeName = '';
   String DeviceModelName = '';
@@ -54,6 +60,46 @@ class _SettingsScreenState extends State<SettingsScreen> {
       }
     } catch (error) {
       print('Error fetching data: $error');
+    }
+  }
+
+  Future<void> _submitDeviceAndRom(String deviceName, String romName) async {
+    bool romAlready = false;
+    final snapshot =
+        await _databaseRequestReference.child("Roms").child(deviceName).get();
+    if (snapshot.value != null) {
+      final data = snapshot.value as Map<Object?, Object?>;
+      data.forEach((key, value) {
+        if (value == romName) {
+          romAlready = true;
+        }
+      });
+      if (!romAlready) {
+        String dataLength = data.length.toString();
+        _databaseRequestReference.child("Roms").child(deviceName).update({
+          dataLength: romName,
+        });
+      }
+    } else {
+      _databaseRequestReference.child("Roms").child(deviceName).set({
+        'Name': deviceName,
+        '1': romName,
+      });
+    }
+  }
+
+  Future<void> _submitDevice(String deviceName) async {
+    final snapshot = await _databaseRequestReference
+        .child("Devices")
+        .child(deviceName)
+        .get();
+    if (snapshot.value != null) {
+      print("Aleady existing device");
+    } else {
+      _databaseRequestReference.child("Devices").update({
+        deviceName: deviceName,
+      });
+      print("suceess");
     }
   }
 
@@ -110,49 +156,242 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ),
-        const BtnFW(
-          label: 'Change Device',
-        ),
-        const BtnFW(
-          label: 'Request Device',
-        ),
-      ],
-    );
-  }
-}
-
-class BtnFW extends StatelessWidget {
-  const BtnFW({
-    super.key,
-    required this.label,
-  });
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, '/splashScreen2');
-        },
-        child: Container(
-          width: double.infinity,
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Center(
-              child: Text(
-            label,
-            style: const TextStyle(
-              fontFamily: 'Exo-Bold',
-              fontSize: 15,
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/splashScreen2');
+            },
+            child: Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                  child: Text(
+                "Change Device",
+                style: TextStyle(
+                  fontFamily: 'Exo-Bold',
+                  fontSize: 15,
+                ),
+              )),
             ),
-          )),
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                backgroundColor: const Color.fromRGBO(48, 49, 52, 1),
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            TextField(
+                              cursorColor: Colors.white,
+                              style: const TextStyle(color: Colors.white),
+                              controller: devicename_controller,
+                              decoration: const InputDecoration(
+                                labelStyle: TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(16),
+                                  ),
+                                ),
+                                label: Text("Enter Device Name"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _submitDevice(
+                                    devicename_controller.text.toString(),
+                                  );
+                                  devicename_controller.clear();
+                                  Fluttertoast.showToast(
+                                    msg:
+                                        "Your request has been successfully recorded",
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  ).then(
+                                    (value) => Navigator.pop(context),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Center(
+                                      child: Text(
+                                    "Change Device",
+                                    style: TextStyle(
+                                      fontFamily: 'Exo-Bold',
+                                      fontSize: 15,
+                                    ),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                  child: Text(
+                "Request Device",
+                style: TextStyle(
+                  fontFamily: 'Exo-Bold',
+                  fontSize: 15,
+                ),
+              )),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                backgroundColor: const Color.fromRGBO(48, 49, 52, 1),
+                isScrollControlled: true,
+                context: context,
+                builder: (context) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            TextField(
+                              cursorColor: Colors.white,
+                              style: const TextStyle(color: Colors.white),
+                              controller: devicename_controller,
+                              decoration: const InputDecoration(
+                                labelStyle: TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(16),
+                                  ),
+                                ),
+                                label: Text("Enter Device Name"),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextField(
+                              cursorColor: Colors.white,
+                              style: const TextStyle(color: Colors.white),
+                              controller: romname_controller,
+                              decoration: const InputDecoration(
+                                labelStyle: TextStyle(color: Colors.white),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(16),
+                                  ),
+                                ),
+                                label: Text("Enter Device Name"),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: GestureDetector(
+                                onTap: () {
+                                  var device =
+                                      devicename_controller.text.toString();
+                                  _submitDeviceAndRom(
+                                    device,
+                                    romname_controller.text.toString(),
+                                  );
+                                  devicename_controller.clear();
+                                  romname_controller.clear();
+                                  Fluttertoast.showToast(
+                                    msg:
+                                        "Your request has been successfully recorded",
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.grey,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  ).then(
+                                    (value) => Navigator.pop(context),
+                                  );
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Center(
+                                      child: Text(
+                                    "Change Device",
+                                    style: TextStyle(
+                                      fontFamily: 'Exo-Bold',
+                                      fontSize: 15,
+                                    ),
+                                  )),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Colors.amber,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Center(
+                  child: Text(
+                "Request Custom Rom",
+                style: TextStyle(
+                  fontFamily: 'Exo-Bold',
+                  fontSize: 15,
+                ),
+              )),
+            ),
+          ),
+        )
+      ],
     );
   }
 }
