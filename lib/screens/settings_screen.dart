@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, avoid_print
 
 import 'package:custrom/components/shared_preferences.dart';
 import 'package:dotlottie_loader/dotlottie_loader.dart';
@@ -76,35 +76,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding: const EdgeInsets.all(10),
           child: Container(
             width: double.infinity,
-            height: 150,
             decoration: BoxDecoration(
               color: const Color.fromRGBO(48, 49, 52, 1),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                DeviceInfoText(
-                  label: "Brand : ",
-                  value: DeviceBrandName,
-                ),
-                DeviceInfoText(
-                  label: "Device : ",
-                  value: deviceCodeName,
-                ),
-                DeviceInfoText(
-                  label: "Model : ",
-                  value: DeviceModelName,
-                ),
-                DeviceInfoText(
-                  label: "Manufacturer : ",
-                  value: DeviceManufacturerName,
-                ),
-                DeviceInfoText(
-                  label: "Name : ",
-                  value: DeviceName,
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  DeviceInfoText(
+                    label: "Brand",
+                    value: DeviceBrandName,
+                  ),
+                  DeviceInfoText(
+                    label: "Device",
+                    value: deviceCodeName,
+                  ),
+                  DeviceInfoText(
+                    label: "Model",
+                    value: DeviceModelName,
+                  ),
+                  DeviceInfoText(
+                    label: "Manufacturer",
+                    value: DeviceManufacturerName,
+                  ),
+                  DeviceInfoText(
+                    label: "Name",
+                    value: DeviceName,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -161,6 +163,7 @@ class DeviceInfoText extends StatelessWidget {
     required this.label,
     required this.value,
   });
+
   final String value;
   final String label;
 
@@ -169,20 +172,28 @@ class DeviceInfoText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontFamily: 'Exo-Bold',
-            fontSize: 15,
+        Flexible(
+          fit: FlexFit.tight,
+          child: Text(
+            label,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'Exo-Bold',
+              fontSize: 15,
+            ),
           ),
         ),
-        Text(
-          value,
-          style: const TextStyle(
-            color: Colors.white,
-            fontFamily: 'Exo-Bold',
-            fontSize: 15,
+        Flexible(
+          fit: FlexFit.tight,
+          child: Text(
+            " : $value",
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'Exo-Bold',
+              fontSize: 15,
+            ),
           ),
         ),
       ],
